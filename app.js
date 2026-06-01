@@ -18,6 +18,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const { storage, cloudinary } = require("./cloudConfig.js");
 
 const listingsRouter = require("./routes/listing.js")
 const reviewsRouter = require("./routes/review.js")
@@ -97,6 +98,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error.ejs", { message });
 });
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log("Server is listening to port 8080")
 });
