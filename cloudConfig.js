@@ -1,8 +1,10 @@
 if(process.env.NODE_ENV != "production") {
   require('dotenv').config();
 }
+
 const cloudinary = require('cloudinary');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinaryStorage = require('multer-storage-cloudinary');
+const CloudinaryStorage = cloudinaryStorage.CloudinaryStorage;
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUD_NAME,
