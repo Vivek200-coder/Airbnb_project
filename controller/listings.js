@@ -28,14 +28,21 @@ module.exports.createListing = async (req, res, next) => {
 
   const location = req.body.listing.location;
   const apiKey = process.env.OPENCAGE_API_KEY;
-  const geoRes = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${apiKey}`);
-  const geoData = await geoRes.json();
 
-  let coordinates = [77.209, 28.6139]; 
-  if (geoData.results.length > 0) {
-    const { lng, lat } = geoData.results[0].geometry;
-    coordinates = [lng, lat];
+  let coordinates = [77.209, 28.6139]; // default coordinates (New Delhi)
+
+  try {
+    const geoRes = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${apiKey}`);
+    const geoData = await geoRes.json();
+
+    if (geoData.results && geoData.results.length > 0) {
+      const { lng, lat } = geoData.results[0].geometry;
+      coordinates = [lng, lat];
+    }
+  } catch (err) {
+    console.log("Geocoding failed, using default coordinates:", err.message);
   }
+
   console.log("Coordinates:", coordinates);
 
   const newListing = new Listing(req.body.listing);
