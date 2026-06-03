@@ -23,10 +23,10 @@ module.exports.showLiting = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res, next) => {
-  let url = req.file 
-    ? req.file.path 
+  let url = req.file
+    ? (req.file.secure_url || req.file.path)
     : "https://static.vecteezy.com/system/resources/thumbnails/071/854/856/small/autumnal-farmhouse-aerial-view-photo.jpeg";
-  let filename = req.file ? req.file.filename : "default";
+  let filename = req.file ? (req.file.public_id || req.file.filename) : "default";
 
   console.log("req.file:", req.file);
   console.log("Image URL:", url);
@@ -75,8 +75,8 @@ module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
   let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
   if (typeof req.file !== "undefined") {
-    let url = req.file.path;
-    let filename = req.file.filename;
+    let url = req.file.secure_url || req.file.path;
+    let filename = req.file.public_id || req.file.filename;
     listing.image = { url, filename };
     await listing.save();
   }

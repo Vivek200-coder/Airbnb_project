@@ -12,6 +12,8 @@ cloudinary.v2.config({
 });
 
 console.log("Cloud name:", process.env.CLOUD_NAME);
+console.log("Cloud API Key:", process.env.CLOUD_API_KEY ? "SET" : "NOT SET");
+console.log("Cloud API Secret:", process.env.CLOUD_API_SECRET ? "SET" : "NOT SET");
 
 const storage = multerStorageCloudinary({
   cloudinary: cloudinary,
