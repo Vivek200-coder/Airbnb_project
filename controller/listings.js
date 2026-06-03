@@ -23,13 +23,18 @@ module.exports.showLiting = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res, next) => {
-  let url = req.file.path;
-  let filename = req.file.filename;
+  let url = req.file 
+    ? req.file.path 
+    : "https://static.vecteezy.com/system/resources/thumbnails/071/854/856/small/autumnal-farmhouse-aerial-view-photo.jpeg";
+  let filename = req.file ? req.file.filename : "default";
+
+  console.log("req.file:", req.file);
+  console.log("Image URL:", url);
 
   const location = req.body.listing.location;
   const apiKey = process.env.OPENCAGE_API_KEY;
 
-  let coordinates = [77.209, 28.6139]; // default coordinates (New Delhi)
+  let coordinates = [77.209, 28.6139];
 
   try {
     const geoRes = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${apiKey}`);
