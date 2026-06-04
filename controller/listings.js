@@ -39,7 +39,6 @@ module.exports.createListing = async (req, res, next) => {
   try {
     const geoRes = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${apiKey}`);
     const geoData = await geoRes.json();
-
     if (geoData.results && geoData.results.length > 0) {
       const { lng, lat } = geoData.results[0].geometry;
       coordinates = [lng, lat];
@@ -73,13 +72,39 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
-  let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+
+  // Get new location from form
+  const location = req.body.listing.location;
+  const apiKey = process.env.OPENCAGE_API_KEY;
+
+  //  Default coordinates (New Delhi)
+  let coordinates = [77.209, 28.6139];
+
+  try {
+    const geoRes = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(location)}&key=${apiKey}`);
+    const geoData = await geoRes.json();
+    if (geoData.results && geoData.results.length > 0) {
+      const { lng, lat } = geoData.results[0].geometry;
+      coordinates = [lng, lat];
+    }
+  } catch (err) {
+    console.log("Geocoding failed during update:", err.message);
+  }
+
+  console.log("Updated Coordinates:", coordinates);
+
+  let listing = await Listing.findByIdAndUpdate(id, {
+    ...req.body.listing,
+    geometry: { type: "Point", coordinates },
+  }, { new: true });
+
   if (typeof req.file !== "undefined") {
     let url = req.file.secure_url || req.file.path;
     let filename = req.file.public_id || req.file.filename;
     listing.image = { url, filename };
     await listing.save();
   }
+
   req.flash("success", "Listing Updated!");
   res.redirect(`/listings/${id}`);
 };
