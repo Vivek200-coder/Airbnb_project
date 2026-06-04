@@ -65,13 +65,30 @@ body {
   margin-bottom: 2rem;
 }
 
+.listing-card {
+  border: none !important;
+  margin-bottom: 2rem;
+  transition: transform 0.2s ease;
+}
+.listing-card:hover {
+  transform: translateY(-4px);
+}
+
+.img-wrapper {
+  overflow: hidden;
+  border-radius: 16px;
+}
 .card-img-top {
-  border-radius: 1rem !important;
+  border-radius: 16px !important;
   width: 100% !important;
   object-fit: cover !important;
   height: 220px;
+  transition: transform 0.4s ease;
 }
 
+.listing-card:hover .card-img-top {
+  transform: scale(1.07);
+}
 .card-body {
   padding: 0 !important;
 }
@@ -82,16 +99,7 @@ body {
 
 .listing-link {
   text-decoration: none;
-}
-
-/* card hover effect */
-.card-img-overlay {
-  opacity: 0;
-}
-
-.card-img-overlay:hover {
-  opacity: 0.2;
-  background-color: white;
+  color: inherit;
 }
 
 /*  FILTERS */
