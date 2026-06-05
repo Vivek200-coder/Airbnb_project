@@ -2,8 +2,24 @@ const Listing = require("../models/listing");
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("listings/index.ejs", { allListings });
+  const { search, category } = req.query;
+  let filter = {};
+
+  //Search filter
+  if(search) {
+    filter.$or = [
+      { title: { $regex: search, $option: "i" } },
+      { location: { $regex: search, $option: "i"} },
+      { country: { $regex: search, $option: "i" } }
+    ];
+  }
+  //Category filter
+  if(category) {
+    filter.category = category;
+  }
+
+  const allListings = await Listing.find(filter);
+  res.render("listings/index.ejs", { allListings, search, category });
 };
 
 module.exports.renderNewForm = async (req, res) => {
