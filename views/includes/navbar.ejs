@@ -37,6 +37,17 @@
     background-color: #d63a45;
   }
 
+  .nav-link-custom {
+    color: #222 !important;
+    text-decoration: none !important;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+  }
+  .nav-link-custom:hover {
+    color: #fe424d !important;
+  }
+
   .mobile-menu {
     padding: 1rem;
     border-top: 1px solid #eee;
@@ -52,14 +63,6 @@
   .mobile-menu a:hover {
     color: #fe424d;
   }
-  .mobile-menu .search-form {
-    margin-bottom: 1rem;
-    width: 100%;
-  }
-  .mobile-menu .search-form input {
-    width: 100%;
-    flex: 1;
-  }
 </style>
 
 <nav class="navbar bg-white border-bottom sticky-top">
@@ -71,7 +74,7 @@
     </a>
 
     <!-- Explore desktop -->
-    <a href="/listings" class="text-decoration-none text-dark me-2 d-none d-md-block">Explore</a>
+    <a href="/listings" class="nav-link-custom d-none d-md-block me-2">Explore</a>
 
     <!-- Search bar center desktop -->
     <form class="search-form mx-auto d-none d-md-flex" action="/listings" method="GET">
@@ -84,12 +87,12 @@
     <!-- Desktop right links -->
     <div class="d-none d-md-flex align-items-center gap-2 ms-3">
       <% if(currUser) { %>
-        <a href="/listings/new" class="text-decoration-none text-dark">Airbnb your home</a>
-        <a href="/logout" class="text-decoration-none"><b>Log out</b></a>
+        <a href="/listings/new" class="nav-link-custom">Airbnb your home</a>
+        <a href="/logout" class="nav-link-custom"><b>Log out</b></a>
       <% } else { %>
-        <a href="/listings/new" class="text-decoration-none text-dark">Airbnb your home</a>
-        <a href="/signup" class="text-decoration-none"><b>Signup</b></a>
-        <a href="/login" class="text-decoration-none"><b>Log in</b></a>
+        <a href="/listings/new" class="nav-link-custom">Airbnb your home</a>
+        <a href="/signup" class="nav-link-custom"><b>Signup</b></a>
+        <a href="/login" class="nav-link-custom"><b>Log in</b></a>
       <% } %>
     </div>
 
