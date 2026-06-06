@@ -3,70 +3,169 @@
     background-color: #fe424d;
     color: #fff;
     border-radius: 25px;
-    padding: 0 1rem;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    white-space: nowrap;
   }
   .search-btn:hover {
     background-color: #d63a45;
     color: #fff;
   }
   .search-btn i {
-    display: inline;
-    margin-right: 0.5rem;
+    margin-right: 0.4rem;
   }
   .search-inp {
     border-radius: 25px;
     padding: 0.5rem 1.5rem;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    border: 1.5px solid #ddd;
+    min-width: 250px;
+  }
+  .search-inp:focus {
+    border-color: #fe424d;
+    box-shadow: 0 0 0 3px rgba(254, 66, 77, 0.15);
+    outline: none;
+  }
+  .search-form {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1.5px solid #ddd;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .search-form:focus-within {
+    border-color: #fe424d;
+    box-shadow: 0 4px 15px rgba(254, 66, 77, 0.2);
+  }
+  .search-form input {
+    border: none;
+    outline: none;
+    padding: 0.55rem 1.2rem;
+    font-size: 0.95rem;
+    flex: 1;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background: transparent;
+    min-width: 200px;
+  }
+  .search-form button {
+    background-color: #fe424d;
+    border: none;
+    padding: 0.55rem 1.2rem;
+    color: white;
+    cursor: pointer;
+    border-radius: 0 25px 25px 0;
+    transition: background-color 0.2s;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-size: 0.95rem;
+  }
+  .search-form button:hover {
+    background-color: #d63a45;
+  }
+
+  /* Hamburger right side pe */
+  .navbar-toggler {
+    margin-left: auto;
+  }
+
+  /* Mobile mein nav links styling */
+  @media (max-width: 768px) {
+    .search-form input {
+      min-width: 150px;
+    }
+    .nav-mobile-links {
+      border-top: 1px solid #eee;
+      padding-top: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .nav-mobile-links a {
+      padding: 0.5rem 0;
+      display: block;
+    }
   }
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
+
     <!-- Logo -->
     <a class="navbar-brand" href="/listings">
       <i class="fa-sharp fa-regular fa-compass"></i>
     </a>
 
-    <!-- Hamburger button -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- Explore (desktop only) -->
+    <div class="navbar-nav d-none d-md-flex">
+      <a class="nav-link" href="/listings">Explore</a>
+    </div>
+
+    <!-- Search bar (center) -->
+    <div class="mx-auto d-none d-md-flex">
+      <form class="search-form" action="/listings" method="GET">
+        <input
+          type="search"
+          name="search"
+          placeholder="Search destination"
+          aria-label="Search"
+        />
+        <button type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i> Search
+        </button>
+      </form>
+    </div>
+
+    <!-- Right links (desktop) -->
+    <div class="navbar-nav ms-auto d-none d-md-flex align-items-center">
+      <% if(currUser) { %>
+        <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        <a class="nav-link" href="/logout"><b>Log out</b></a>
+      <% } else { %>
+        <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        <a class="nav-link" href="/signup"><b>Signup</b></a>
+        <a class="nav-link" href="/login"><b>Log in</b></a>
+      <% } %>
+    </div>
+
+    <!-- Hamburger button (mobile - right side) -->
+    <button class="navbar-toggler d-md-none ms-auto" type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mobileMenu"
+      aria-controls="mobileMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-
-      <!-- Explore link -->
-      <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore</a>
-      </div>
-
-      <!-- Search bar (functional) -->
-      <div class="navbar-nav mx-auto">
-        <form class="d-flex" role="search" action="/listings" method="GET">
+    <!-- Mobile menu -->
+    <div class="collapse navbar-collapse d-md-none" id="mobileMenu">
+      <!-- Mobile search -->
+      <div class="my-2">
+        <form class="search-form" action="/listings" method="GET">
           <input
-            class="form-control me-2 search-inp"
             type="search"
             name="search"
             placeholder="Search destination"
             aria-label="Search"
           />
-          <button class="btn search-btn" type="submit">
+          <button type="submit">
             <i class="fa-solid fa-magnifying-glass"></i> Search
           </button>
         </form>
       </div>
 
-      <!-- Right links -->
-      <div class="navbar-nav ms-auto">
+      <!-- Mobile links -->
+      <div class="nav-mobile-links">
+        <a class="nav-link" href="/listings">Explore</a>
+        <a class="nav-link" href="/listings/new">Airbnb your home</a>
         <% if(currUser) { %>
-          <a class="nav-link" href="/listings/new">Airbnb your home</a>
           <a class="nav-link" href="/logout"><b>Log out</b></a>
         <% } else { %>
-          <a class="nav-link" href="/listings/new">Airbnb your home</a>
           <a class="nav-link" href="/signup"><b>Signup</b></a>
           <a class="nav-link" href="/login"><b>Log in</b></a>
         <% } %>
       </div>
-
     </div>
+
   </div>
 </nav>
