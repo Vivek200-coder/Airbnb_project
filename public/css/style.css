@@ -569,7 +569,13 @@ body {
   }
 }
 
-.signup {
+.custom-btn {
   background-color: #fe424d;
+  color: white;
+  border: none;
+}
+
+.custom-btn:hover {
+  background-color: #e63946;
   color: white;
 }
