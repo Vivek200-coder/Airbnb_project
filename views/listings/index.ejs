@@ -3,13 +3,13 @@
 <!-- Filters -->
 <div id="filters">
   <a href="/listings<%= (typeof search !== 'undefined' && search) ? '?search=' + search : '' %>"
-    class="filter <%= (typeof category === 'undefined' || !category) ? 'active' : '' %>">
-    <i class="fa-solid fa-list"></i>
-    <p>All</p>
-  </a>
+  class="filter <%= (typeof category === 'undefined' || !category) ? 'active' : '' %>">
+  <div><i class="fa-solid fa-house"></i></div>
+  <p>All</p>
+</a>
   <a href="/listings?category=Trending<%= (typeof search !== 'undefined' && search) ? '&search=' + search : '' %>"
     class="filter <%= (typeof category !== 'undefined' && category === 'Trending') ? 'active' : '' %>">
-    <i class="fa-solid fa-fire"></i>
+    <div><i class="fa-solid fa-fire"></i></div>
     <p>Trending</p>
   </a>
   <a href="/listings?category=Rooms<%= (typeof search !== 'undefined' && search) ? '&search=' + search : '' %>"
