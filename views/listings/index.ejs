@@ -1,31 +1,5 @@
 <% layout("/layouts/boilerplate") %>
 
-<!-- Search Bar -->
-<div class="search-bar">
-  <form action="/listings" method="GET">
-    <% if (typeof category !== 'undefined' && category) { %>
-      <input type="hidden" name="category" value="<%= category %>">
-    <% } %>
-    <input
-      type="text"
-      name="search"
-      placeholder="Search by title, location or country..."
-      value="<%= typeof search !== 'undefined' ? search || '' : '' %>"
-    />
-    <button type="submit">
-      <i class="fa-solid fa-magnifying-glass"></i> Search
-    </button>
-  </form>
-</div>
-
-<% if (typeof search !== 'undefined' && search) { %>
-  <div class="clear-search">
-    <a href="/listings<%= (typeof category !== 'undefined' && category) ? '?category=' + category : '' %>">
-      ✕ Clear search "<%= search %>"
-    </a>
-  </div>
-<% } %>
-
 <!-- Filters -->
 <div id="filters">
   <a href="/listings<%= (typeof search !== 'undefined' && search) ? '?search=' + search : '' %>"

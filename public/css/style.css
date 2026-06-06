@@ -86,7 +86,7 @@ body {
 }
 
 .listing-card:hover .card-img-top {
-  transform: scale(1.07);
+  transform: scale(1.03);
 }
 
 .card-body {
