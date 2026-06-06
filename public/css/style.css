@@ -579,3 +579,9 @@ body {
   background-color: #e63946;
   color: white;
 }
+.custom-btn{
+    background-color: #fe424d !important;
+    color: white !important;
+    border: none !important;
+    padding: 8px 16px;
+}
